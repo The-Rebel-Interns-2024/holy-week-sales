@@ -2,9 +2,15 @@
 
 *Description*
 
+This repository consists of a microservice connected to a non-relational database, MongoDB. It will manage the sales of a product allowing communication between the customer and the supplier.
+
+The product document has an id, code, name, description, price and tax.
+
 *Installation*
+
+In the Docker folder we run docker compose which is responsible for raising the database and the microservice and once it is raised we run our project.
 
 *Branches*
 
-* Master
-* Developer
+* Master -> Contains the complete project
+* Developer -> These are the different branches of work where each developer of the project will perform the tasks assigned at that time.
