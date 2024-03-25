@@ -4,12 +4,10 @@ package com.serbatic.holyweeksales.data.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-
+@Document(collation =  "product")
 public class Product {
     @Id
     private Long id;
-
     private String code;
     private String name;
     private String description;
@@ -74,5 +72,17 @@ public class Product {
 
     public void setTax(float tax) {
         this.tax = tax;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", tax=" + tax +
+                '}';
     }
 }
