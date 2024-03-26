@@ -4,10 +4,10 @@ package com.serbatic.holyweeksales.data.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collation =  "product")
+@Document(collection =  "product")
 public class Product {
     @Id
-    private Long id;
+    private String id;
     private String code;
     private String name;
     private String description;
@@ -15,9 +15,10 @@ public class Product {
     private float tax;
 
     public Product() {
+
     }
 
-    public Product(Long id, String code, String name, String description, float price, float tax) {
+    public Product(String id, String code, String name, String description, float price, float tax) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -26,11 +27,11 @@ public class Product {
         this.tax = tax;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
