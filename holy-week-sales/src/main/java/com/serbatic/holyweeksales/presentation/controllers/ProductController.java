@@ -42,6 +42,7 @@ public class ProductController {
 
     @GetMapping("/{code}")
     public Product getAllProductsByCode(@PathVariable String code){
+
         return productService.retrieveByCode(code);
     }
 
