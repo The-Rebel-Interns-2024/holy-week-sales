@@ -19,7 +19,20 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductResource productR) {
+        validateProduct(productR);
         return ResponseEntity.ok(productService.save(productR));
+    }
+
+    private void validateProduct(ProductResource productR) {
+        if (productR.getPrice() <= 0) {
+            throw new IllegalArgumentException("The entered price is negative.");
+        }
+        if (productR.getTax() <= 0 || productR.getTax() > 21) {
+            throw new IllegalArgumentException("The entered tax is not valid. Must be greater than 0 and maximum 21");
+        }
+        if (productR.getName().length() < 2) {
+            throw new IllegalArgumentException("The entered name length must be minimum 2.");
+        }
     }
 
 }

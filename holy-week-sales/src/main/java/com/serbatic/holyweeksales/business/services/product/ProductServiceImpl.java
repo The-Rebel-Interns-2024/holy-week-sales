@@ -23,7 +23,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse save(ProductResource productR) {
-        validateProduct(productR);
         String code = "";
         do {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -43,15 +42,4 @@ public class ProductServiceImpl implements ProductService {
        return  ProductResponse.productResponseMapping(productCreated);
     }
 
-    private void validateProduct(ProductResource productR) {
-        if (productR.getPrice() <= 0) {
-            throw new IllegalArgumentException("The entered price is negative.");
-        }
-        if (productR.getTax() <= 0 || productR.getTax() > 21) {
-            throw new IllegalArgumentException("The entered tax is not valid. Must be greater than 0 and maximum 21");
-        }
-        if (productR.getName().length() < 2) {
-            throw new IllegalArgumentException("The entered name length must be minimum 2.");
-        }
-    }
 }
