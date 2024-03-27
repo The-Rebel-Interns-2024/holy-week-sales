@@ -1,13 +1,10 @@
 package com.serbatic.holyweeksales.business.services.product;
 
 
-import com.serbatic.holyweeksales.client.StorehouseFeignClient;
 import com.serbatic.holyweeksales.data.entities.Product;
 import com.serbatic.holyweeksales.data.repositories.ProductRepository;
 import com.serbatic.holyweeksales.presentation.dto.ProductResource;
 import com.serbatic.holyweeksales.presentation.dto.ProductResponse;
-import com.serbatic.holyweeksales.presentation.dto.ProductStorageResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,12 +16,10 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    private final StorehouseFeignClient storehouseFeingClient;
-
-    public ProductServiceImpl(ProductRepository productRepository, StorehouseFeignClient storehouseFeingClient) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.storehouseFeingClient = storehouseFeingClient;
     }
+
 
     @Override
     public ProductResponse save(ProductResource productR) {
@@ -44,9 +39,7 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(productR.getPrice());
         product.setTax(productR.getTax());
         Product productCreated = productRepository.save(product);
-        ProductStorageResource productStoreHouse = new ProductStorageResource(productCreated.getCode(), productCreated.getName());
-        ResponseEntity<ProductStorageResource> productStorageResource = storehouseFeingClient.createProduct(productStoreHouse);
-        return ProductResponse.productResponseMapping(productCreated);
+       return  ProductResponse.productResponseMapping(productCreated);
     }
 
 }
