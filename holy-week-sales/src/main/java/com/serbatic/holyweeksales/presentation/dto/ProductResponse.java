@@ -1,5 +1,7 @@
 package com.serbatic.holyweeksales.presentation.dto;
 
+import com.serbatic.holyweeksales.data.entities.Product;
+
 public class ProductResponse {
     private String name;
     private String code;
@@ -15,6 +17,12 @@ public class ProductResponse {
         this.price = price;
         this.tax = tax;
         this.netPricePerUnit = netPrice;
+    }
+
+    public static ProductResponse productResponseMapping(Product product) {
+        Float totalPrice = product.getPrice() + (product.getPrice() * (product.getTax() / 100));
+        ProductResponse productResponse = new ProductResponse(product.getName(), product.getCode(), product.getDescription(), product.getPrice(), product.getTax(), totalPrice);
+        return productResponse;
     }
 
     public String getName() {
