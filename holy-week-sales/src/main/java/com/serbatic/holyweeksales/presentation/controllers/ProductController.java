@@ -1,9 +1,11 @@
 package com.serbatic.holyweeksales.presentation.controllers;
 
 import com.serbatic.holyweeksales.business.services.product.ProductService;
+import com.serbatic.holyweeksales.data.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -11,9 +13,18 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-//    @PostMapping()
-//    public ResponseEntity<Product> createProduct(@RequestBody String name) {
-//        return ResponseEntity.ok().build();
-//    }
+    @GetMapping()
+    public List<Product> getAllProducts(){
+        return productService.retrieveAll();
+    }
+    /*@PostMapping
+    public Product createProduct(@RequestBody Product product){
+        return  productService.save(product);
+    }*/
+
+    @GetMapping("/{code}")
+    public Product getAllProductsByCode(@PathVariable String code){
+        return productService.retrieveByCode(code);
+    }
 
 }

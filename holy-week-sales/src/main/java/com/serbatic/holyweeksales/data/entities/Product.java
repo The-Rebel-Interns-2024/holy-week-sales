@@ -3,11 +3,15 @@ package com.serbatic.holyweeksales.data.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collation =  "product")
+import java.util.UUID;
+
+@Document(collection =  "product")
 public class Product {
     @Id
-    private Long id;
+    private String id;
+    @Field("code")
     private String code;
     private String name;
     private String description;
@@ -17,8 +21,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String code, String name, String description, float price, float tax) {
-        this.id = id;
+    public Product(String id, String code, String name, String description, float price, float tax) {
+        this.id =   UUID.randomUUID().toString();;
         this.code = code;
         this.name = name;
         this.description = description;
@@ -26,11 +30,11 @@ public class Product {
         this.tax = tax;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
