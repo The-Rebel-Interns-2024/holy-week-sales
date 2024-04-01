@@ -22,12 +22,14 @@ public class ProductExitController {
     public ResponseEntity<ProductExitResponse> createProductExit(@RequestBody StorageResource storageResource) {
 
         if (validateProductExit(storageResource)){
-            ProductExitResponse productExitResponse = productExitService.createProductExit(storageResource) ;
+            ResponseEntity<ProductExitResponse> productExitResponse = productExitService.createProductExit(storageResource) ;
 
             if(productExitResponse != null){
 
-                return ResponseEntity.ok(productExitResponse);
+                return productExitResponse;
+
             } else {
+
                 return ResponseEntity.badRequest().build();
             }
         } else {

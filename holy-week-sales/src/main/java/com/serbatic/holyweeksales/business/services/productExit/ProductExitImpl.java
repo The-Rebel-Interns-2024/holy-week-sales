@@ -5,6 +5,9 @@ import com.serbatic.holyweeksales.data.entities.Product;
 import com.serbatic.holyweeksales.data.repositories.ProductRepository;
 import com.serbatic.holyweeksales.presentation.dto.ProductExitResponse;
 import com.serbatic.holyweeksales.presentation.dto.StorageResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -23,28 +26,34 @@ public class ProductExitImpl implements ProductExitService {
 
 
     @Override
-    public ProductExitResponse createProductExit (StorageResource storageResource){
+    public ResponseEntity<ProductExitResponse> createProductExit (StorageResource storageResource){
 
         ProductExitResponse prodExitResp = new ProductExitResponse();
         Optional<Product> product = productRepository.findByCode(storageResource.getCode());
 
         if(!product.isEmpty()){
 
-            if(storehouseFeingClient.createProductExit(storageResource).equals(storageResource)){
+            StorageResource response = storehouseFeingClient.createProductExit(storageResource).getBody();
+
+            if(response != null){
 
                 prodExitResp.setName(product.get().getName());
                 prodExitResp.setCode(product.get().getCode());
                 prodExitResp.setDescription(product.get().getDescription());
                 prodExitResp.setPrice(product.get().getPrice());
                 prodExitResp.setQuantity(storageResource.getQuantity());
-                return  prodExitResp;
+
+                return  ResponseEntity.ok(prodExitResp);
+
+            } else {
+
+                throw new IllegalArgumentException("The productExit don't create");
+
             }
 
         } else {
 
             throw new NoSuchElementException("The product don´t exist");
         }
-
-        return  prodExitResp;
     }
 }
