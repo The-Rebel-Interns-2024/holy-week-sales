@@ -1,7 +1,9 @@
 package com.serbatic.holyweeksales.clients;
 
 
+import com.serbatic.holyweeksales.presentation.dto.ProductEntryResponse;
 import com.serbatic.holyweeksales.presentation.dto.ProductStorageResource;
+import com.serbatic.holyweeksales.presentation.dto.StorageResource;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,4 +14,6 @@ public interface StorehouseFeingClient {
 
     @PostMapping("/product")
     ResponseEntity<ProductStorageResource> createProduct(@RequestBody ProductStorageResource productStorageResource);
+    @PostMapping("/entries")
+    ResponseEntity<ProductEntryResponse> createEntryProduct(@RequestBody StorageResource storageResource);
 }

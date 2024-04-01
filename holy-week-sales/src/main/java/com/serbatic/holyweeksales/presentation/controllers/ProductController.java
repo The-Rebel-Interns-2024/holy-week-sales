@@ -1,9 +1,9 @@
 package com.serbatic.holyweeksales.presentation.controllers;
 
 import com.serbatic.holyweeksales.business.services.product.ProductService;
+import com.serbatic.holyweeksales.clients.StorehouseFeingClient;
 import com.serbatic.holyweeksales.data.entities.Product;
-import com.serbatic.holyweeksales.presentation.dto.ProductResource;
-import com.serbatic.holyweeksales.presentation.dto.ProductResponse;
+import com.serbatic.holyweeksales.presentation.dto.*;
 import com.serbatic.holyweeksales.data.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +17,28 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    private final StorehouseFeingClient storehouseFeingClient;
+
+    public ProductController(StorehouseFeingClient storehouseFeingClient) {
+        this.storehouseFeingClient = storehouseFeingClient;
+    }
+
 
     @PostMapping()
     public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductResource productR) {
         validateProduct(productR);
         return ResponseEntity.ok(productService.save(productR));
+    }
+    @PostMapping("/entries")
+    public ResponseEntity<ProductEntryResponse> createEntryProduct(@RequestBody StorageResource productR) {
+        if(productR.getQuantity() > 0){
+            Product product = productService.retrieveByCode(productR.getCode());
+            ProductEntryResponse entryResponse = ProductEntryResponse.from(product, Long.valueOf(productR.getQuantity()));
+            return storehouseFeingClient.createEntryProduct(productR);
+        } else{
+            throw new IllegalArgumentException("The quantity is not valid.");
+        }
+
     }
 
     private void validateProduct(ProductResource productR) {
