@@ -1,11 +1,7 @@
 package com.serbatic.holyweeksales.presentation.controllers;
 
-import com.serbatic.holyweeksales.business.services.product.ProductService;
 import com.serbatic.holyweeksales.clients.StorehouseFeingClient;
-import com.serbatic.holyweeksales.presentation.dto.ExitsStorageResource;
-import com.serbatic.holyweeksales.presentation.dto.ProductResource;
-import com.serbatic.holyweeksales.presentation.dto.ProductResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.serbatic.holyweeksales.presentation.dto.StorageResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +20,7 @@ public class ProductExitController {
 
 
     @PostMapping()
-    public ResponseEntity<ExitsStorageResource> createProductExit(@RequestBody ExitsStorageResource exitsStorageResource) {
+    public ResponseEntity<StorageResource> createProductExit(@RequestBody StorageResource exitsStorageResource) {
         if (validateProductExit(exitsStorageResource)){
             return storehouseFeingClient.createProductExit(exitsStorageResource);
         } else {
@@ -32,7 +28,7 @@ public class ProductExitController {
         }
     }
 
-    private boolean validateProductExit(ExitsStorageResource exitsStorageResource) {
+    private boolean validateProductExit(StorageResource exitsStorageResource) {
         if (exitsStorageResource.getQuantity() <= 0) {
             return  false;
         }

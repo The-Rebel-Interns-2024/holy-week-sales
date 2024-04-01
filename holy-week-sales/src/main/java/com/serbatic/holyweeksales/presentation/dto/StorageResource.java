@@ -1,13 +1,13 @@
 package com.serbatic.holyweeksales.presentation.dto;
 
-public class ExitsStorageResource {
+public class StorageResource {
     String code;
     Integer quantity;
 
-    public ExitsStorageResource() {
+    public StorageResource() {
     }
 
-    public ExitsStorageResource(String code, Integer quantity) {
+    public StorageResource(String code, Integer quantity) {
         this.code = code;
         this.quantity = quantity;
     }
