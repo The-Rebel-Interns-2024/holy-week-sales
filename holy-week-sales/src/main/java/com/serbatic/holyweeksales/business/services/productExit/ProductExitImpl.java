@@ -26,30 +26,36 @@ public class ProductExitImpl implements ProductExitService {
 
 
     @Override
-    public ResponseEntity<ProductExitResponse> createProductExit (StorageResource storageResource){
+    public ProductExitResponse createProductExit (StorageResource storageResource){
 
         ProductExitResponse prodExitResp = new ProductExitResponse();
         Optional<Product> product = productRepository.findByCode(storageResource.getCode());
 
         if(!product.isEmpty()){
+            try {
+                StorageResource response = storehouseFeingClient.createProductExit(storageResource).getBody();
 
-            StorageResource response = storehouseFeingClient.createProductExit(storageResource).getBody();
+                if(response != null){
 
-            if(response != null){
+                    prodExitResp.setName(product.get().getName());
+                    prodExitResp.setCode(product.get().getCode());
+                    prodExitResp.setDescription(product.get().getDescription());
+                    prodExitResp.setPrice(product.get().getPrice());
+                    prodExitResp.setQuantity(storageResource.getQuantity());
 
-                prodExitResp.setName(product.get().getName());
-                prodExitResp.setCode(product.get().getCode());
-                prodExitResp.setDescription(product.get().getDescription());
-                prodExitResp.setPrice(product.get().getPrice());
-                prodExitResp.setQuantity(storageResource.getQuantity());
+                    return  prodExitResp;
 
-                return  ResponseEntity.ok(prodExitResp);
+                } else {
 
-            } else {
+                    throw new IllegalArgumentException("The productExit don't create");
 
-                throw new IllegalArgumentException("The productExit don't create");
+                }
 
+            } catch (Exception ex){
+
+                return null;
             }
+
 
         } else {
 

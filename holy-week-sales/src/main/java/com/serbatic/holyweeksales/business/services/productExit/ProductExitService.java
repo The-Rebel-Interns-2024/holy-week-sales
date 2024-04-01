@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface ProductExitService {
 
 //    Product findByCode(String code);
-    ResponseEntity<ProductExitResponse> createProductExit (StorageResource storageResource);
+    ProductExitResponse createProductExit (StorageResource storageResource);
 }
