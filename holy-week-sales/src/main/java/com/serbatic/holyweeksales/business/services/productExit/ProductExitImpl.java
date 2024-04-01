@@ -37,7 +37,7 @@ public class ProductExitImpl implements ProductExitService {
                 prodExitResp.setDescription(product.get().getDescription());
                 prodExitResp.setPrice(product.get().getPrice());
                 prodExitResp.setQuantity(storageResource.getQuantity());
-
+                return  prodExitResp;
             }
 
         } else {
