@@ -23,6 +23,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.save(productR));
     }
 
+
     private void validateProduct(ProductResource productR) {
         if (productR.getPrice() <= 0) {
             throw new IllegalArgumentException("The entered price is negative.");
