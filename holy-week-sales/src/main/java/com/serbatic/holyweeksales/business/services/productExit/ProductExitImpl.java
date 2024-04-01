@@ -5,10 +5,12 @@ import com.serbatic.holyweeksales.data.entities.Product;
 import com.serbatic.holyweeksales.data.repositories.ProductRepository;
 import com.serbatic.holyweeksales.presentation.dto.ProductExitResponse;
 import com.serbatic.holyweeksales.presentation.dto.StorageResource;
+import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Service
 public class ProductExitImpl implements ProductExitService {
 
     private final ProductRepository productRepository;
@@ -19,18 +21,8 @@ public class ProductExitImpl implements ProductExitService {
         this.storehouseFeingClient = storehouseFeingClient;
     }
 
-//    @Override
-//    public Product findByCode(String code) {
-//
-//        Optional<Product> product = productRepository.findByCode(code);
-//
-//        if(product.isEmpty()){
-//            throw new NoSuchElementException("The product don´t exist");
-//        }
-//
-//        return product.get();
-//    }
 
+    @Override
     public ProductExitResponse createProductExit (StorageResource storageResource){
 
         ProductExitResponse prodExitResp = new ProductExitResponse();
