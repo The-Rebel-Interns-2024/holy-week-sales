@@ -21,7 +21,12 @@ public class ProductEntryController {
     @PostMapping()
     public ResponseEntity<ProductEntryResponse> createEntryProduct(@RequestBody StorageResource productR) {
         if(productR.getQuantity() > 0){
-            return ResponseEntity.ok(productEntryService.save(productR));
+            ProductEntryResponse save = productEntryService.save(productR);
+            if(save !=null){
+                return ResponseEntity.ok(save);
+            } else {
+                return  ResponseEntity.badRequest().build();
+            }
         } else{
             throw new IllegalArgumentException("The quantity is not valid.");
         }

@@ -23,7 +23,11 @@ public class ProductEntryImpl implements ProductEntryService {
     @Override
     public ProductEntryResponse save(StorageResource storageResource) {
         Product product = productService.retrieveByCode(storageResource.getCode());
-        ResponseEntity<ProductEntryResponse> entryProduct = storehouseFeingClient.createEntryProduct(storageResource);
-        return ProductEntryResponse.from(product, Long.valueOf(storageResource.getQuantity()));
+        try{
+            ResponseEntity<ProductEntryResponse> entryProduct = storehouseFeingClient.createEntryProduct(storageResource);
+            return ProductEntryResponse.from(product, Long.valueOf(storageResource.getQuantity()));
+        } catch (Exception ex){
+            return null;
+        }
     }
 }
