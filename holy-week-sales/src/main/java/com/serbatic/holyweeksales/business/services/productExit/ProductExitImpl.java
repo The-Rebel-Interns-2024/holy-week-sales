@@ -27,7 +27,7 @@ public class ProductExitImpl implements ProductExitService {
 
     @Override
     public ProductExitResponse createProductExit (StorageResource storageResource){
-
+        double final_price =0;
         ProductExitResponse prodExitResp = new ProductExitResponse();
         Optional<Product> product = productRepository.findByCode(storageResource.getCode());
 
@@ -37,10 +37,12 @@ public class ProductExitImpl implements ProductExitService {
 
                 if(response != null){
 
+                    final_price = (product.get().getPrice()+ product.get().getPrice()*product.get().getTax()/100)*storageResource.getQuantity();
+
                     prodExitResp.setName(product.get().getName());
                     prodExitResp.setCode(product.get().getCode());
                     prodExitResp.setDescription(product.get().getDescription());
-                    prodExitResp.setPrice(product.get().getPrice());
+                    prodExitResp.setPrice(final_price);
                     prodExitResp.setQuantity(storageResource.getQuantity());
 
                     return  prodExitResp;

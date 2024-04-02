@@ -6,13 +6,13 @@ public class ProductExitResponse {
     private String name;
     private String code;
     private String description;
-    private Float price;
+    private Double price;
     private Integer quantity;
 
     public ProductExitResponse() {
     }
 
-    public ProductExitResponse(String name, String code, String description, Float price, Integer quantity) {
+    public ProductExitResponse(String name, String code, String description, Double price, Integer quantity) {
         this.name = name;
         this.code = code;
         this.description = description;
@@ -44,11 +44,11 @@ public class ProductExitResponse {
         this.description = description;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
