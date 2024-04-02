@@ -1,0 +1,6 @@
+FROM amazoncorretto:17.0.0
+
+EXPOSE 8082
+
+ADD ./target/*.jar sales-api.jar
+CMD ["java","-jar","/sales-api.jar"]
